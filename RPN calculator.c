@@ -4,6 +4,20 @@
 #include <ctype.h>
 #include <windows.h>
 
+
+void push(float stack[], float value, int *currStack) {
+    int i = *currStack;
+
+    while (i != 0) {
+        stack[i] = stack[i-1];
+        i--;
+    }
+
+    stack[0] = value;
+    *currStack += 1;
+}
+
+
 int main() {
     char input[256];
     float result;
