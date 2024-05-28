@@ -51,6 +51,38 @@ int pop(float stack[], char operation, int *currStack) {
     return 0;
 }
 
+int decode(char *input, float *outval) {
+    int currStack = 0;
+    char *token;
+    float stack[100]; 
+
+    token = strtok(input, " ");
+    while (token != NULL) {
+        if (isdigit(token[0]) || (token[0] == '-' && isdigit(token[1]))) {
+            push(stack, atof(token), &currStack);
+        } else if (strlen(token) == 1 && strchr("+-*/", token[0])) {
+            if (currStack < 2) {
+                printf("\t\t\tError: Invalid RPN expression.\n");
+                return -1;
+            }
+            if (pop(stack, token[0], &currStack) == -1) {
+                return -1;
+            }
+        } else {
+            printf("\t\t\tInvalid token: %s\n", token);
+            return -1;
+        }
+        token = strtok(NULL, " ");
+    }
+
+    if (currStack != 1) {
+        printf("\t\t\tError: Invalid RPN expression.\n");
+        return -1;
+    }
+
+    *outval = stack[0];
+    return 0;
+}
 
 int main() {
     char input[256];
