@@ -17,6 +17,40 @@ void push(float stack[], float value, int *currStack) {
     *currStack += 1;
 }
 
+int pop(float stack[], char operation, int *currStack) {
+    int i;
+
+    switch (operation) {
+        case '+':
+            stack[0] = stack[1] + stack[0];
+            break;
+        case '-':
+            stack[0] = stack[1] - stack[0];
+            break;
+        case '*':
+            stack[0] = stack[1] * stack[0];
+            break;
+        case '/':
+            if (stack[0] != 0) {
+                stack[0] = stack[1] / stack[0];
+            } else {
+                printf("\t\t\tError: Division by zero.\n");
+                return -1;
+            }
+            break;
+        default:
+            printf("\t\t\tInvalid character.\n");
+            return -1;
+    }
+
+    for (i = 1; i < *currStack - 1; i++) {
+        stack[i] = stack[i + 1];
+    }
+
+    *currStack -= 1;
+    return 0;
+}
+
 
 int main() {
     char input[256];
