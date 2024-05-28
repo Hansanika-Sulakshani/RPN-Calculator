@@ -106,5 +106,25 @@ int main() {
     printf("\t|            -> Enter 'x' to exit <-             |\n");
     printf("\t ------------------------------------------------\n");
 
+    while (1) {
+        printf("\n\n\t=> Enter an RPN expression: ");
+        fgets(input, sizeof(input), stdin);
+
+        input[strcspn(input, "\n")] = 0;
+
+        if (strcmp(input, "x") == 0 || strcmp(input, "X") == 0) {
+            printf("\t\tExiting RPN Calculator. Goodbye!\n");
+            break;
+        }
+
+        if (decode(input, &result) == 0) {
+            printf("\t\t    ------------------------\n");
+            printf("\t\t      The answer is: %.3f\n", result);
+            printf("\t\t    ------------------------\n");
+        } else {
+            printf("\t\t\tError in processing the RPN expression.\n");
+        }
+    }
+
     return 0;
 }
